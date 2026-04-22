@@ -1,0 +1,21 @@
+// repositories/user.repo.js
+import db from "@/lib/knex";
+
+export const getUserByIdSP = async (id) => {
+  const result = await db.raw("EXEC GetUserById @UserId = ?", [id]);
+  return result.recordset;
+};
+
+// transaction
+export const createUserWithTransaction = async (user) => {
+  return await db.transaction(async (trx) => {
+    const [userId] = await trx("Users").insert(user);
+
+    await trx("Logs").insert({
+      message: "User created",
+      userId,
+    });
+
+    return userId;
+  });
+};
