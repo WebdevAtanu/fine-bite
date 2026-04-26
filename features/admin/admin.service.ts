@@ -1,5 +1,5 @@
-import { AdminInterface } from "../interfaces/admin.interface";
-import { adminRepo } from "../repositories/admin.repo";
+import { AdminInterface } from "./admin.interface";
+import { adminRepo } from "./admin.repo";
 
 class adminService {
   async getAll() {

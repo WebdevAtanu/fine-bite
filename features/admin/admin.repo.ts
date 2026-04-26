@@ -1,5 +1,5 @@
 import db from "@/lib/knex";
-import { AdminInterface } from "../interfaces/admin.interface";
+import { AdminInterface } from "./admin.interface";
 import { randomUUID } from "crypto";
 
 class adminRepo {

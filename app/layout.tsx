@@ -15,10 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="">
-      <SidebarProvider>
-        <AppSidebar />
-        <body className="min-h-full flex flex-col"> <SidebarTrigger />{children}</body>
-      </SidebarProvider>
+      <body className="min-h-full flex flex-col">
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarTrigger />{children}
+        </SidebarProvider>
+      </body>
     </html>
   );
 }

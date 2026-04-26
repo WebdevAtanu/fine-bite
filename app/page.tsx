@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className="min-h-screen w-full flex bg-red-500">
+    <div className="min-h-screen w-full flex">
 
       {/* LEFT PANEL} */}
       <div className="hidden lg:flex w-2/3 relative overflow-hidden">
@@ -23,11 +24,12 @@ export default function Home() {
 
       {/* RIGHT PANEL - LOGIN/SIGNUP */}
       <div className="flex flex-1 items-center justify-center p-6">
-        <div className="w-full max-w-md bg-white dark:bg-zinc-900 rounded-2xl shadow-xl p-6">
-
-          <h2 className="">
-            LOGO
-          </h2>
+        <motion.div
+          layout
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="w-full max-w-md bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border p-6"
+        >
+          <h2>LOGO</h2>
 
           <h2 className="text-2xl font-semibold text-center text-zinc-800 dark:text-white">
             {isLogin ? "Login Account" : "Create Account"}
@@ -35,13 +37,22 @@ export default function Home() {
 
           <div className="mt-8 space-y-4">
 
-            {!isLogin && (
+            {/* 🔥 IMPORTANT: no conditional rendering here */}
+            <motion.div
+              initial={false}
+              animate={{
+                height: isLogin ? 0 : "auto",
+                opacity: isLogin ? 0 : 1,
+              }}
+              transition={{ duration: 0.35 }}
+              className="overflow-hidden"
+            >
               <input
                 type="text"
                 placeholder="Restaurant Name"
                 className="w-full px-4 py-3 rounded-lg border dark:border-zinc-700 dark:bg-zinc-800"
               />
-            )}
+            </motion.div>
 
             <input
               type="email"
@@ -60,7 +71,6 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Toggle */}
           <p className="text-center text-sm mt-6 text-zinc-500">
             {isLogin ? "New user?" : "Already registered?"}{" "}
             <button
@@ -71,12 +81,10 @@ export default function Home() {
             </button>
           </p>
 
-          {/* Footer hint */}
           <p className="text-xs text-center mt-6 text-zinc-400">
             Secure ERP access • Multi-branch support • Role based login
           </p>
-
-        </div>
+        </motion.div>
       </div>
     </div>
   );

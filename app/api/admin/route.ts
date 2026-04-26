@@ -1,5 +1,5 @@
-import { adminService } from "@/features/admin/services/admin.service";
-import * as responseHelper from "@/lib/response.helper";
+import { adminService } from "@/features/admin/admin.service";
+import * as responseHelper from "@/lib/responseHelper";
 
 export async function GET() {
   const admins = await adminService.getAll();
