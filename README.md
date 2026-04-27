@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fine-Bite
 
-## Getting Started
+A full-stack restaurant management system built with Next.js, designed to simplify daily restaurant operations like menu handling, order tracking, and billing through a modern, responsive interface.
+**Fine-Bite** helps restaurant admins manage everything from menu items to billing in one place. It focuses on usability, real-time updates, and clean UI to improve operational efficiency.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Admin Management** - Secure authentication system to create and manage restaurant administrators with role-based access.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Item Management** - Create and manage menu items with images, multiple sizes, and dynamic pricing options.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Table Management** - Track table availability in real-time with intuitive status indicators (available, occupied, reserved).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Order Management** - Manage the complete order lifecycle—from placement to completion—with clear status tracking and workflow controls.
 
-## Learn More
+- **Billing Management** - Generate invoices automatically with accurate calculations, including taxes, discounts, and payment status tracking.
 
-To learn more about Next.js, take a look at the following resources:
+- **Responsive UI** - Clean and modern interface built using Tailwind CSS and shadcn/ui for a seamless experience across devices.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Database Integration** - Robust data handling using Microsoft SQL Server with efficient query management.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **API-Driven Architecture** - RESTful APIs for smooth communication between frontend and backend.
 
-## Deploy on Vercel
+- **Authentication & Security** - Secure login/signup system with password hashing using bcrypt.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Category         | Technologies                           |
+| ---------------- | -------------------------------------- |
+| **Frontend**     | Next.js, TypeScript                    |
+| **Styling & UI** | Tailwind CSS, shadcn/ui, Framer Motion |
+| **Backend**      | Next.js API Routes                     |
+| **Database**     | Microsoft SQL Server (MSSQL), Knex.js  |
+| **Others**       | Axios, bcrypt                          |
