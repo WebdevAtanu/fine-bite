@@ -5,3 +5,8 @@ export interface AdminInterface {
   password: string;
   isActive: boolean;
 }
+
+export interface AdminLoginInterface {
+  email: string;
+  password: string;
+}

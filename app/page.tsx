@@ -3,9 +3,62 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import * as apiService from "../lib/apiService";
+import { ApiResponseType } from "@/types/apiResponse";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    adminName: "",
+    email: "",
+    password: "",
+  });
+    const router = useRouter();
+
+  const handleOperation = () => {
+    if (isLogin) {
+      handleLogin();
+    }
+    else {
+      handleRegister();
+    }
+  }
+
+  const handleRegister = async () => {
+    setIsLoading(true);
+    const response: ApiResponseType<object> = await apiService.post("/admin/auth/register", userInfo);
+    if (response.success) {
+      setIsLoading(false);
+      toast.success(response.message);
+      setUserInfo({ adminName: "", email: "", password: "" });
+    }
+    else {
+      setIsLoading(false);
+      toast.error(response.message);
+    }
+  };
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+    const response: ApiResponseType<object> = await apiService.post("/admin/auth/login", userInfo);
+    if (response.success) {
+      setIsLoading(false);
+      toast.success(response.message);
+      console.log(response.data);
+      localStorage.setItem("token", (response.data as { token: string }).token);
+      setUserInfo({ adminName: "", email: "", password: "" });
+      router.push("/home");
+    }
+    else {
+      setIsLoading(false);
+      toast.error(response.message);
+    }
+  };
+
+
 
   return (
     <div className="min-h-screen w-full flex">
@@ -37,7 +90,6 @@ export default function Home() {
 
           <div className="mt-8 space-y-4">
 
-            {/* 🔥 IMPORTANT: no conditional rendering here */}
             <motion.div
               initial={false}
               animate={{
@@ -49,8 +101,10 @@ export default function Home() {
             >
               <input
                 type="text"
-                placeholder="Restaurant Name"
+                placeholder="Name"
                 className="w-full px-4 py-3 rounded-lg border dark:border-zinc-700 dark:bg-zinc-800"
+                value={userInfo.adminName}
+                onChange={(e) => setUserInfo({ ...userInfo, adminName: e.target.value })}
               />
             </motion.div>
 
@@ -58,15 +112,19 @@ export default function Home() {
               type="email"
               placeholder="Email"
               className="w-full px-4 py-3 rounded-lg border dark:border-zinc-700 dark:bg-zinc-800"
+              value={userInfo.email}
+              onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
             />
 
             <input
               type="password"
               placeholder="Password"
               className="w-full px-4 py-3 rounded-lg border dark:border-zinc-700 dark:bg-zinc-800"
+              value={userInfo.password}
+              onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
             />
 
-            <button className="w-full bg-black text-white dark:bg-white dark:text-black py-3 rounded-lg font-medium hover:opacity-90 transition">
+            <button className="w-full bg-black text-white dark:bg-white dark:text-black py-3 rounded-lg font-medium hover:opacity-90 transition disabled:opacity-50" onClick={() => handleOperation()} disabled={isLoading}>
               {isLogin ? "Login to Dashboard" : "Create Account"}
             </button>
           </div>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: process.env.API_URL || "http://localhost:3000/api",
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api`,
   headers: {
     "Content-Type": "application/json",
   },
@@ -20,10 +20,16 @@ export const apiClient = axios.create({
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API ERROR:", error.response?.data || error.message);
+    const errorData = error.response?.data || {
+      message: "Something went wrong",
+    };
 
-    return Promise.reject(
-      error.response?.data || { message: "Something went wrong" },
-    );
+    console.warn("API MESSAGE:", errorData.message);
+
+    // return as resolved response instead of rejecting
+    return Promise.resolve({
+      data: errorData,
+      status: error.response?.status || 500,
+    });
   },
 );

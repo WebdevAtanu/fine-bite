@@ -1,6 +1,7 @@
 import db from "@/lib/knex";
 import { AdminInterface } from "./admin.interface";
 import { randomUUID } from "crypto";
+import bcrypt from "bcrypt";
 
 class adminRepo {
   async getAll() {
@@ -14,21 +15,21 @@ class adminRepo {
   }
 
   async getAdminByEmail(email: string) {
-    const result = await db("admin").where("email", email).select("*"); // get admin by email
+    const result = await db("admin").where("email", email).select("*").first(); // get admin by email
     return result;
   }
 
   async createAdmin(admin: AdminInterface) {
     const id = randomUUID(); // generate a unique id
-    console.log(id);
+    const passwordHash = await bcrypt.hash(admin.password, 10);
     const result = await db("admin")
       .insert({
         adminId: id,
         adminName: admin.adminName,
         email: admin.email,
         mobile: admin.mobile,
-        password: admin.password,
-        isActive: admin.isActive,
+        password: passwordHash,
+        isActive: admin.isActive ?? true,
         createdDate: new Date(),
       })
       .returning("adminId"); // return the inserted id

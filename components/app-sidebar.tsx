@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import {
     Sidebar,
@@ -10,11 +11,11 @@ import {
     SidebarMenuItem,
     SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { Spinner } from "./ui/spinner";
-import { Home, Users} from "lucide-react";
-import * as api from "@/lib/apiService";
+// import { Spinner } from "./ui/spinner";
+import { Home, Users } from "lucide-react";
 import { MenuInterface } from "@/features/menu/menu.interface";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function MenuItems({ menu }: { menu: MenuInterface }) {
     const iconMap = {
@@ -24,43 +25,44 @@ function MenuItems({ menu }: { menu: MenuInterface }) {
 
     const Icon = iconMap[menu.menuIcon as keyof typeof iconMap];
 
+    const capitalize = (str: string) => {
+        if (!str) return "";
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    };
+
+    const pathName = usePathname();
+    console.log(pathName);
+    const active = pathName === `/${menu.menuName}`;
+
     return (
         <SidebarMenuItem>
             <SidebarMenuButton asChild>
-                <Link href={menu.menuName}>
+                <Link href={menu.menuName} className={`${active ? "bg-gray-300" : ""}`}>
                     {Icon && <Icon className="mr-2 h-4 w-4" />}
-                    {menu.menuName}
+                    {capitalize(menu.menuName)}
                 </Link>
             </SidebarMenuButton>
         </SidebarMenuItem>
     );
 }
 
-export function AppSidebar() {
-    const [menus, setMenus] = useState<MenuInterface[]>([]); // state to store menus
-    const [loading, setLoading] = useState(true); // state to track loading
-    const [error, setError] = useState<string | null>(null); // state to track errors
+type Props = {
+    menus: MenuInterface[];
+};
 
-    useEffect(() => {
-        let isMounted = true; // flag to check if component is mounted
+export function AppSidebar({ menus }: Props) {
+    // const [hasToken, setHasToken] = useState<boolean | null>(null);
 
-        const fetchMenus = async () => {
-            try {
-                const result = await api.get<{ data: MenuInterface[] }>("/menu"); // fetch menus
-                if (isMounted) setMenus(result.data); // update state
-            } catch (err: any) {
-                if (isMounted) setError(err?.message || "Failed to fetch");
-            } finally {
-                if (isMounted) setLoading(false); // update loading state 
-            }
-        };
+    // useEffect(() => {
+    //     const token = localStorage.getItem("token");
+    //     setHasToken(!!token);
+    // }, []);
 
-        fetchMenus(); // call the function
+    // // ⛔ Prevent hydration mismatch
+    // if (hasToken === null) return null;
 
-        return () => {
-            isMounted = false; // unmount the component
-        };
-    }, []);
+    // // ❌ No token → hide sidebar
+    // if (!hasToken) return null;
 
     return (
         <Sidebar>
@@ -70,14 +72,9 @@ export function AppSidebar() {
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {
-                                loading ?
-                                    <div className="flex w-full justify-center items-center">
-                                        <Spinner className="size-6" />
-                                    </div>
-                                    :
-                                    menus.map((menu) => (
-                                        <MenuItems key={menu.menuId} menu={menu} />
-                                    ))
+                                menus.map((menu) => (
+                                    <MenuItems key={menu.menuId} menu={menu} />
+                                ))
                             }
                         </SidebarMenu>
                     </SidebarGroupContent>
