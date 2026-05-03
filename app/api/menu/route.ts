@@ -4,7 +4,8 @@ import * as responseHelper from "@/lib/responseHelper";
 export async function GET() {
   try {
     const menus = await menuService.getAll();
-    if (menus.length > 0) {
+
+    if (menus) {
       return responseHelper.successResponse(menus, "Menus found");
     }
     return responseHelper.successNoData("Menus not found");

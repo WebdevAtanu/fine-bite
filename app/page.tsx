@@ -50,7 +50,7 @@ export default function Home() {
       console.log(response.data);
       localStorage.setItem("token", (response.data as { token: string }).token);
       setUserInfo({ adminName: "", email: "", password: "" });
-      router.push("/home");
+      router.push("/dashboard/home");
     }
     else {
       setIsLoading(false);

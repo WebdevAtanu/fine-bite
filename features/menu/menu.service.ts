@@ -3,7 +3,20 @@ import { menuRepo } from "./menu.repo";
 
 class menuService {
   async getAll() {
-    return await menuRepo.getAll();
+    const menus = await menuRepo.getAll();
+
+    const groupedMenu = menus.reduce(
+      (acc, menu) => {
+        if (!acc[menu.type]) {
+          acc[menu.type] = [];
+        }
+        acc[menu.type].push(menu);
+        return acc;
+      },
+      {} as Record<string, MenuInterface[]>,
+    );
+
+    return groupedMenu;
   }
 
   async createMenu(menu: MenuInterface) {

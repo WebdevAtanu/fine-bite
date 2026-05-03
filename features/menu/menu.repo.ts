@@ -4,8 +4,20 @@ import { randomUUID } from "crypto";
 
 class menuRepo {
   async getAll() {
-    const result = await db("m_menu").select("*"); // get all menus
-    return result;
+    return await db("m_menu")
+      .where("isActive", true)
+      .orderByRaw(
+        `
+      CASE 
+        WHEN type = 'default' THEN 0
+        WHEN type = 'master' THEN 1
+        WHEN type = 'transaction' THEN 2
+        WHEN type = 'report' THEN 3
+        ELSE 4
+      END
+    `,
+      )
+      .orderByRaw("LOWER(menuName) ASC");
   }
 
   async getMenuByName(name: string) {
@@ -21,8 +33,8 @@ class menuRepo {
         menuId: id,
         menuName: menu.menuName,
         menuIcon: menu.menuIcon,
+        type: menu.type,
         isActive: menu.isActive ?? true,
-        createdDate: new Date(),
       })
       .returning("menuId"); // return the inserted id
 
