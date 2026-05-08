@@ -1,91 +1,102 @@
 import React from "react";
+import Chart from "@/components/chart";
 
-function HomePage() {
+const stats = [
+  { label: "Total orders", value: "120", trend: "↑ 8% today" },
+  { label: "Revenue", value: "₹45k", trend: "↑ 12% today" },
+  { label: "Customers", value: "80", trend: "↑ 5% today" },
+  { label: "Menus", value: "80", trend: "↑ 5% today" },
+];
+
+const actions = [
+  "New order",
+  "Add menu item",
+  "View reports",
+  "View orders",
+  "View menus",
+  "View settings",
+  "View analytics",
+];
+
+export default function HomePage() {
+  const datetime = new Date().toLocaleString();
   return (
-    <div className="p-6 bg-red-900 w-full">
+    <div className="min-h-screen bg-stone-100 p-5 w-full">
       {/* Header */}
-      <h1 className="text-2xl font-bold mb-6">Restaurant Dashboard</h1>
-
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="bg-white p-5 rounded-2xl shadow">
-          <h2 className="text-gray-500">Total Orders</h2>
-          <p className="text-2xl font-bold mt-2">120</p>
+      <div className="mb-6 flex items-center justify-between">
+        <div className="flex flex-col items-start gap-2">
+          <span className="text-sm font-medium">Dashboard</span>
+          <span className="text-sm font-medium">{datetime}</span>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl shadow">
-          <h2 className="text-gray-500">Revenue</h2>
-          <p className="text-2xl font-bold mt-2">₹45,000</p>
-        </div>
-
-        <div className="bg-white p-5 rounded-2xl shadow">
-          <h2 className="text-gray-500">Customers</h2>
-          <p className="text-2xl font-bold mt-2">80</p>
+        <div className="flex gap-2">
+          <div className="">🔔</div>
+          <div className="">
+            <input type="text" name="" id="" className="border-2 border-black" />
+          </div>
         </div>
       </div>
 
-      {/* Main Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Stats */}
+      <div className="mb-4 grid grid-cols-2 gap-4 md:grid-cols-4">
+        {stats.map((s) => (
+          <div
+            key={s.label}
+            className="rounded-xl border border-neutral-200 bg-white p-4"
+          >
+            <p className="mb-1 text-xs text-gray-500">{s.label}</p>
 
-        {/* Recent Orders */}
-        <div className="lg:col-span-2 bg-white p-5 rounded-2xl shadow">
-          <h2 className="text-lg font-semibold mb-4">Recent Orders</h2>
+            <p className="font-mono text-2xl font-semibold tracking-tight">
+              {s.value}
+            </p>
 
-          <table className="w-full text-left">
-            <thead>
-              <tr className="text-gray-500 border-b">
-                <th className="py-2">Order ID</th>
-                <th>Customer</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b">
-                <td className="py-2">#101</td>
-                <td>Rahul</td>
-                <td>₹500</td>
-                <td className="text-green-600">Completed</td>
-              </tr>
+            <p className="mt-1.5 text-[11px] font-medium text-green-700">
+              {s.trend}
+            </p>
+          </div>
+        ))}
+      </div>
 
-              <tr className="border-b">
-                <td className="py-2">#102</td>
-                <td>Priya</td>
-                <td>₹750</td>
-                <td className="text-yellow-600">Pending</td>
-              </tr>
-
-              <tr>
-                <td className="py-2">#103</td>
-                <td>Amit</td>
-                <td>₹300</td>
-                <td className="text-red-600">Cancelled</td>
-              </tr>
-            </tbody>
-          </table>
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="col-span-2 rounded-xl border border-neutral-200 bg-white p-4">
+          <div className="flex justify-between">
+            <div className="flex flex-col items-start">
+              <h3>Order Summary</h3>
+              <p>Summary of orders</p>
+            </div>
+            <div>
+              dropdown
+            </div>
+          </div>
+          <hr />
+          {/* Charts */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Chart />
+            <div>
+              <h3>15000</h3>
+              <p>from 1000</p>
+            </div>
+          </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="bg-white p-5 rounded-2xl shadow">
-          <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
+        {/* Actions */}
+        <div className="rounded-xl border border-neutral-200 bg-white p-4">
+          <p className="mb-4 text-sm font-medium">Quick actions</p>
+          <div className="space-y-2">
+            {actions.map((a) => (
+              <button
+                key={a}
+                className="flex w-full items-center justify-between rounded-lg border border-neutral-200 bg-white px-3 py-3 text-left text-sm transition hover:bg-neutral-50"
+              >
+                <span>{a}</span>
 
-          <div className="flex flex-col gap-3">
-            <button className="bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
-              Add New Order
-            </button>
-
-            <button className="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600">
-              Add Menu Item
-            </button>
-
-            <button className="bg-purple-500 text-white py-2 rounded-lg hover:bg-purple-600">
-              View Reports
-            </button>
+                <span className="text-gray-400">›</span>
+              </button>
+            ))}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-export default HomePage;
