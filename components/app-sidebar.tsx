@@ -35,7 +35,7 @@ function MenuItems({ menu }: { menu: MenuInterface }) {
             <SidebarMenuButton asChild>
                 <Link
                     href={`/dashboard/${menu.menuName}`}
-                    className={`flex items-center px-2 py-1 rounded-md ${active ? "bg-slate-900 hover:bg-slate-900 hover:text-white text-white font-semibold" : ""
+                    className={`flex items-center px-2 py-1 rounded-md ${active ? "bg-red-900 hover:bg-red-900 hover:text-white text-white font-semibold" : ""
                         }`}
                 >
                     <Icon className="mr-2 h-4 w-4" />
@@ -67,7 +67,7 @@ export function AppSidebar({ menus }: Props) {
 
     return (
         <Sidebar>
-            <SidebarContent>
+            <SidebarContent className="overflow-auto">
                 {Object.entries(menus).map(([type, menuList]) => {
 
                     const isDefault = type.toLowerCase() === "default";

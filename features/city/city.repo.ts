@@ -1,5 +1,5 @@
 import db from "@/lib/knex";
-import { AdminInterface } from "./admin.interface";
+import { AdminInterface } from "./city.interface";
 import { randomUUID } from "crypto";
 import bcrypt from "bcrypt";
 

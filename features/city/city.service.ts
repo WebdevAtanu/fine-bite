@@ -1,5 +1,5 @@
-import { AdminInterface, AdminLoginInterface } from "./admin.interface";
-import { adminRepo } from "./admin.repo";
+import { AdminInterface, AdminLoginInterface } from "./city.interface";
+import { adminRepo } from "./city.repo";
 import bcrypt from "bcrypt";
 import { generateToken } from "@/lib/jwt";
 
