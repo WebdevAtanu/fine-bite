@@ -14,9 +14,12 @@ export default async function RootLayout({
   const menus = res.data;
 
   return (
-        <SidebarProvider>
-          <AppSidebar menus={menus} />
-          <SidebarTrigger />{children}
-        </SidebarProvider>
+    <SidebarProvider>
+      <AppSidebar menus={menus} />
+      <SidebarTrigger />
+      <div className="w-full min-h-screen p-4">
+        {children}
+      </div>
+    </SidebarProvider>
   );
 }

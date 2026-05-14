@@ -1,10 +1,10 @@
 import React from 'react'
-import CityInsert from '@/features/city/components/city-insert'
+import CityView from '@/features/city/components/city-view'
 
 function CityPage() {
   return (
     <div>
-      <CityInsert />
+      <CityView />
     </div>
   )
 }

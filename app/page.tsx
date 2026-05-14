@@ -16,7 +16,7 @@ export default function Home() {
     email: "",
     password: "",
   });
-    const router = useRouter();
+  const router = useRouter();
 
   const handleOperation = () => {
     if (isLogin) {

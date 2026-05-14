@@ -15,7 +15,6 @@ type CustomInputPropType = {
   placeholder?: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-  description?: string;
 };
 
 export function CustomInput({
@@ -25,10 +24,9 @@ export function CustomInput({
   placeholder,
   value,
   setValue,
-  description,
 }: CustomInputPropType) {
   return (
-    <Field>
+    <Field className="mt-1">
       <FieldLabel htmlFor={id}>{label}</FieldLabel>
 
       <Input
@@ -38,12 +36,6 @@ export function CustomInput({
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-
-      {description && (
-        <FieldDescription>
-          {description}
-        </FieldDescription>
-      )}
     </Field>
   );
 }

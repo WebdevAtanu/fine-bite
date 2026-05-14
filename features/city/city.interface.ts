@@ -1,12 +1,6 @@
-export interface AdminInterface {
-  adminName: string;
-  email: string;
-  mobile: string;
-  password: string;
-  isActive: boolean;
-}
+export type CityDataType = {
+  id: string;
+  name: string;
+  country: string;
+};
 
-export interface AdminLoginInterface {
-  email: string;
-  password: string;
-}
