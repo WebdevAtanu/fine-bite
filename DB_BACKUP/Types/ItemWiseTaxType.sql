@@ -1,0 +1,6 @@
+CREATE TYPE itemWiseTaxType AS TABLE 
+( 
+    ItemId UNIQUEIDENTIFIER, 
+    TaxId UNIQUEIDENTIFIER, 
+    TaxAmount DECIMAL(18, 2) 
+);
